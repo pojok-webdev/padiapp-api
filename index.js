@@ -154,6 +154,11 @@ app.get('/getclient/:id',(req,res)=>{
       res.send(result)
     })
 })
+app.post('/getclientsbyname',(req,res)=>{
+    con.getdata(query.getClientsByName(req.body),result=>{
+        res.send(result)
+    })
+})
 app.post('/createlog',(req,res)=>{
     con.getdata(query.createLog(req.body),result=>{
         res.send(result)
