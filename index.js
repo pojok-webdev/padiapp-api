@@ -143,6 +143,7 @@ app.get('/help/:method',(req,res) => {
 
 
 app.get('/getclients',(req,res) => {
+    res.header("Access-Control-Allow-Origin","*");
     console.log("Query",query.getClients());
     con.getdata(query.getClients(),result => {
         console.log("Result",result);
@@ -150,11 +151,13 @@ app.get('/getclients',(req,res) => {
     })
 })
 app.get('/getclient/:id',(req,res)=>{
+    res.header("Access-Control-Allow-Origin","*");
     con.getdata(query.getClient(req.params),result => {
       res.send(result)
     })
 })
 app.post('/getclientsbyname',(req,res)=>{
+    res.header("Access-Control-Allow-Origin","*");
     con.getdata(query.getClientsByName(req.body),result=>{
         res.send(result)
     })
