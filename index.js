@@ -162,6 +162,12 @@ app.post('/getclientsbyname',(req,res)=>{
         res.send(result)
     })
 })
+app.get('/getclientsitesbyclientid/:id',(req,res)=>{
+    res.header("Access-Control-Allow-Origin","*");
+    con.getdata(query.getClientSitesByClientId(req.params),result => {
+      res.send(result)
+    })
+})
 app.post('/createlog',(req,res)=>{
     con.getdata(query.createLog(req.body),result=>{
         res.send(result)

@@ -52,6 +52,27 @@ var getClient = obj => {
         console.log('getClients SQL',sql)
         return sql;
     },
+    getClientSitesByClientId = obj => {
+        sql = 'select a.id client_id,a.name,a.address,a.phone,  ';
+        sql+= 'case a.clientcategory '
+        sql+= 'when "1" then "FFR" '
+        sql+= 'when "2" then "Platinum" '
+        sql+= 'when "3" then "Gold" '
+        sql+= 'when "4" then "Bronze" '
+        sql+= 'when "5" then "Silver" '
+        sql+= 'else "Other" end clientcategory, '
+        sql+= 'b.id site_id,b.address site_address, '
+        sql+= 'c.username '
+        sql+= 'from clients a '
+        sql+= 'left outer join client_sites b on b.client_id=a.id '
+        sql+= 'left outer join users c on c.id=a.user_id '
+        sql+= ''
+        sql+= 'where a.status="1" '
+        sql+= 'and a.id='+obj.id+' '
+        sql+= 'order by a.name asc '
+        console.log('getClients SQL',sql)
+        return sql;
+    },
     createLog = obj => {
         sql = 'insert into activitylog '
         sql+= '(email ,module ,description) '
@@ -69,6 +90,7 @@ var getClient = obj => {
         getClient:getClient,
         getClients:getClients,
         getClientsByName:getClientsByName,
+        getClientSitesByClientId:getClientSitesByClientId,
         getLogs:getLogs,
         createLog:createLog,
     }
