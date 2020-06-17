@@ -170,7 +170,7 @@ app.get('/getclientsitesbyclientid/:id',(req,res)=>{
 })
 app.get('/getallclientsites',(req,res)=>{
     res.header("Access-Control-Allow-Origin","*");
-    con.getdata(query.getAllClientSites(req.params),result => {
+    con.getdata(query.getAllClientSites(),result => {
       res.send(result)
     })
 })
