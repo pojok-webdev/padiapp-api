@@ -184,4 +184,11 @@ app.get('/getlogs',(req,res)=>{
         res.send(result)
     })
 })
+app.get('/autoupdateexpiredfb',(req,res)=>{
+    res.header("Access-Control-Allow-Origin","*");
+    con.getdata(query.autoUpdateExpiredFb(),result => {
+      res.send(result)
+    })
+})
+
 app.listen(process.env.PORT || 2020);

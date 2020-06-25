@@ -105,8 +105,13 @@ var getClient = obj => {
         sql = 'select * from activitylog '
         console.log('getlogs',sql)
         return sql
+    },
+    autoUpdateExpiredFb = () =>{
+        sql = 'update fbs set expirystatus="1"  where date(now())>= date(period2) '
+        return sql
     }
     module.exports = {
+        autoUpdateExpiredFb:autoUpdateExpiredFb,
         getClient:getClient,
         getClients:getClients,
         getClientsByName:getClientsByName,
