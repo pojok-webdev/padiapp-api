@@ -106,11 +106,63 @@ var getClient = obj => {
         console.log('getlogs',sql)
         return sql
     },
+/*
+    | client_id           | int(11)      | NO   |     | 0                 |       |
+| name                | varchar(50)  | YES  |     | NULL              |       |
+| nofb                | varchar(20)  | NO   | PRI |                   |       |
+| fbcategory          | varchar(9)   | YES  |     | NULL              |       |
+| businesstype        | varchar(200) | YES  |     | NULL              |       |
+| otherbusinesstype   | varchar(200) | YES  |     | NULL              |       |
+| siup                | varchar(50)  | YES  |     | NULL              |       |
+| siupaddress         | varchar(200) | YES  |     | NULL              |       |
+| npwp                | varchar(50)  | YES  |     | NULL              |       |
+| npwpaddress         | varchar(200) | YES  |     | NULL              |       |
+| sppkp               | varchar(50)  | YES  |     | NULL              |       |
+| sppkpaddress        | varchar(200) | YES  |     | NULL              |       |
+| address             | varchar(200) | YES  |     | NULL              |       |
+| billaddress         | text         | YES  |     | NULL              |       |
+| city                | varchar(50)  | YES  |     | NULL              |       |
+| telp                | varchar(100) | YES  |     | NULL              |       |
+| fax                 | varchar(50)  | YES  |     | NULL              |       |
+| activationdate      | date         | YES  |     | NULL              |       |
+| period1             | date         | YES  |     | NULL              |       |
+| period2             | date         | YES  |     | NULL              |       |
+| servicecategories   | int(11)      | YES  |     | NULL              |       |
+| services            | text         | YES  |     | NULL              |       |
+| accounttype         | varchar(1)   | YES  |     | 1                 |       |
+| description         | text         | YES  |     | NULL              |       |
+| internaldescription | text         | YES  |     | NULL              |       |
+| completed           | varchar(1)   | YES  |     | NULL              |       |
+| status              | varchar(1)   | YES  |     | 0                 |       |
+| expirystatus        | varchar(1)   | YES  |     | 0                 |       |
+| createuser          | varchar(30)  | YES  |     | NULL              |       |
+| createdate          | timestamp    | NO   |     | CURRENT_TIMESTAMP |       |
+| tempstatus          | varchar(1)   | YES  |     | NULL              |       |
+*/
+    getFb = () => {
+        sql = 'select a.nofb,a.name,a.fbcategory,a.address,a.telp,  ';
+        sql+= 'a.siup,a.npwp,a.sppkp  '
+        sql+= 'from fbs a '
+        sql+= 'where a.status="1" '
+        sql+= 'order by a.name asc '
+        console.log('getClients SQL',sql)
+        return sql;
+    },
     autoUpdateExpiredFb = () =>{
         sql = 'update fbs set expirystatus="1"  where date(now())>= date(period2) '
         return sql
+    },
+    autoUpdateValidFb = ()=>{
+        sql = 'select client_id,name,nofb,min(period1),period2,status from fbs '
+        sql+= 'where status!="2" group by client_id order by client_id,period1 asc;'
+    },
+    autoUpdateTicketChildren = obj => {
+      sql = 'update tickets set cause_id='+obj.cause_id+',solution='+obj.solution+' where parentid='+obj.parentid+' '
+      return sql
     }
     module.exports = {
+      getFb:getFb,
+      autoUpdateTicketChildren:autoUpdateTicketChildren,
         autoUpdateExpiredFb:autoUpdateExpiredFb,
         getClient:getClient,
         getClients:getClients,

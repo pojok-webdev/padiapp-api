@@ -174,6 +174,12 @@ app.get('/getallclientsites',(req,res)=>{
       res.send(result)
     })
 })
+app.get('/getfb/:id',(req,res)=>{
+    res.header("Access-Control-Allow-Origin","*");
+    con.getdata(query.getFb(req.params),result => {
+      res.send(result)
+    })
+})
 app.post('/createlog',(req,res)=>{
     con.getdata(query.createLog(req.body),result=>{
         res.send(result)
@@ -190,5 +196,10 @@ app.get('/autoupdateexpiredfb',(req,res)=>{
       res.send(result)
     })
 })
-
+app.post('/autoupdateticketchildren',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.autoUpdateTicketChildren(req.body),result=>{
+    res.send(result)
+  })
+})
 app.listen(process.env.PORT || 2020);
