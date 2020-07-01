@@ -158,6 +158,7 @@ var getClient = obj => {
     },
     autoUpdateTicketChildren = obj => {
       sql = 'update tickets set cause_id='+obj.cause_id+',solution='+obj.solution+' where parentid='+obj.parentid+' '
+      console.log('update children',sql);
       return sql
     }
     module.exports = {
