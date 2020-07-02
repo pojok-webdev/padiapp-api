@@ -202,6 +202,12 @@ app.get('/autoupdatevalidfb',(req,res)=>{
       res.send(result)
     })
 })
+app.get('/autoupdateinvalidfb',(req,res)=>{
+    res.header("Access-Control-Allow-Origin","*");
+    con.getdata(query.autoUpdateInvalidFb(),result => {
+      res.send(result)
+    })
+})
 app.post('/autoupdateticketchildren',(req,res)=>{
   res.header("Access-Control-Allow-Origin","*")
   con.getdata(query.autoUpdateTicketChildren(req.body),result=>{

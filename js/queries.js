@@ -168,6 +168,10 @@ var getClient = obj => {
         console.log('auoupdate valid fb',sql)
         return sql
     },
+    autoUpdateInvalidFb = () => {
+      sql = 'update fbs a left outer join clients b on b.id=a.client_id set a.status="0" where a.nofb<>b.validfb and a.status<>"2";'
+      return sql
+    },
     autoUpdateTicketChildren = obj => {
       sql = "update tickets a "
       sql+= "right outer join tickets b on b.id=a.parentid "
@@ -176,6 +180,7 @@ var getClient = obj => {
       return sql
     }
     module.exports = {
+      autoUpdateInvalidFb:autoUpdateInvalidFb,
       autoUpdateValidFb:autoUpdateValidFb,
       getFb:getFb,
       autoUpdateTicketChildren:autoUpdateTicketChildren,
