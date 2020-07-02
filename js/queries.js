@@ -155,21 +155,36 @@ var getClient = obj => {
     autoUpdateValidFb = ()=>{
         sql = 'select client_id,name,nofb,min(period1),period2,status from fbs '
         sql+= 'where status!="2" group by client_id order by client_id,period1 asc;'
+        sql = 'select b.client_id,b.nofb,b.period1,status '
+        sql+= 'from '
+        sql+= '(select client_id,max(period1) as period1 from fbs where status<>"2" group by client_id) a '
+        sql+= 'inner join (select * from fbs where status<>"2") b '
+        sql+= 'using (client_id,period1) order by b.client_id;'
+        sql = 'update clients W '
+        sql+= 'left outer join '
+        sql+= '(select b.client_id,b.nofb,b.period1,status from (select client_id,max(period1) as period1 from fbs where status<>"2" group by client_id) a '
+        sql+= 'inner join (select * from fbs where status<>"2") b using (client_id,period1) '
+        sql+= 'order by b.client_id)X on X.client_id=W.id set W.validfb=X.nofb'
+        console.log('auoupdate valid fb',sql)
+        return sql
     },
     autoUpdateTicketChildren = obj => {
-      sql = "update tickets set cause_id="+obj.cause_id+",solution='"+obj.solution+"' where parentid="+obj.parentid+" "
+      sql = "update tickets a "
+      sql+= "right outer join tickets b on b.id=a.parentid "
+      sql+= "set a.cause_id=b.cause_id , a.solution=b.solution where b.id= "+obj.id
       console.log('update children',sql);
       return sql
     }
     module.exports = {
+      autoUpdateValidFb:autoUpdateValidFb,
       getFb:getFb,
       autoUpdateTicketChildren:autoUpdateTicketChildren,
-        autoUpdateExpiredFb:autoUpdateExpiredFb,
-        getClient:getClient,
-        getClients:getClients,
-        getClientsByName:getClientsByName,
-        getClientSitesByClientId:getClientSitesByClientId,
-        getAllClientSites:getAllClientSites,
-        getLogs:getLogs,
-        createLog:createLog,
+      autoUpdateExpiredFb:autoUpdateExpiredFb,
+      getClient:getClient,
+      getClients:getClients,
+      getClientsByName:getClientsByName,
+      getClientSitesByClientId:getClientSitesByClientId,
+      getAllClientSites:getAllClientSites,
+      getLogs:getLogs,
+      createLog:createLog,
     }

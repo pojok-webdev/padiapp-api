@@ -196,6 +196,12 @@ app.get('/autoupdateexpiredfb',(req,res)=>{
       res.send(result)
     })
 })
+app.get('/autoupdatevalidfb',(req,res)=>{
+    res.header("Access-Control-Allow-Origin","*");
+    con.getdata(query.autoUpdateValidFb(),result => {
+      res.send(result)
+    })
+})
 app.post('/autoupdateticketchildren',(req,res)=>{
   res.header("Access-Control-Allow-Origin","*")
   con.getdata(query.autoUpdateTicketChildren(req.body),result=>{
