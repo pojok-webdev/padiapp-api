@@ -153,13 +153,6 @@ var getClient = obj => {
         return sql
     },
     autoUpdateValidFb = ()=>{
-        sql = 'select client_id,name,nofb,min(period1),period2,status from fbs '
-        sql+= 'where status!="2" group by client_id order by client_id,period1 asc;'
-        sql = 'select b.client_id,b.nofb,b.period1,status '
-        sql+= 'from '
-        sql+= '(select client_id,max(period1) as period1 from fbs where status<>"2" group by client_id) a '
-        sql+= 'inner join (select * from fbs where status<>"2") b '
-        sql+= 'using (client_id,period1) order by b.client_id;'
         sql = 'update clients W '
         sql+= 'left outer join '
         sql+= '(select b.client_id,b.nofb,b.period1,status from (select client_id,max(period1) as period1 from fbs where status<>"2" group by client_id) a '
@@ -172,6 +165,14 @@ var getClient = obj => {
       sql = 'update fbs a left outer join clients b on b.id=a.client_id set a.status="0" where a.nofb<>b.validfb and a.status<>"2";'
       return sql
     },
+    autoUpdateValidFbs = () => {
+      sql = 'update fbs a left outer join clients b on b.validfb=a.nofb '
+      sql+= 'set a.status = "1" '
+      sql+= 'where b.name is not null '
+      sql = ' update fbs a left outer join clients b on b.validfb=a.nofb set a.status='1'  where validfb is not null'
+      console.log('autoupdatefbs',sql)
+      return sql
+    }
     autoUpdateTicketChildren = obj => {
       sql = "update tickets a "
       sql+= "right outer join tickets b on b.id=a.parentid "
@@ -180,6 +181,7 @@ var getClient = obj => {
       return sql
     }
     module.exports = {
+      autoUpdateValidFbs:autoUpdateValidFbs,
       autoUpdateInvalidFb:autoUpdateInvalidFb,
       autoUpdateValidFb:autoUpdateValidFb,
       getFb:getFb,
