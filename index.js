@@ -226,4 +226,10 @@ app.get('/getpics',(req,res)=>{
     res.send(result)
   })
 })
+app.get('/getpicbyclientid/:client_id',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.getPicByClientID(req.params),result=>{
+    res.send(result)
+  })
+})
 app.listen(process.env.PORT || 2020);

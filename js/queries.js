@@ -152,8 +152,17 @@ var getClient = obj => {
       sql+= 'left outer join fbpics b on b.client_id=a.id order by a.name ';
       console.log('getPics',sql)
       return sql
+    },
+    getPicByClientID = obj => {
+      sql = 'select a.id client_id,a.name,b.name pic,b.role,b.phone,b.email from clients a '
+      sql+= 'left outer join fbpics b on b.client_id=a.id '
+      sql+= 'where a.id='+obj.client_id+' '
+      sql+= 'order by a.name '
+      console.log('getPics',sql)
+      return sql
     }
     module.exports = {
+      getPicByClientID:getPicByClientID,
       getPics:getPics,
       autoUpdateValidFbs:autoUpdateValidFbs,
       autoUpdateInvalidFb:autoUpdateInvalidFb,
