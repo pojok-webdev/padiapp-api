@@ -106,39 +106,6 @@ var getClient = obj => {
         console.log('getlogs',sql)
         return sql
     },
-/*
-    | client_id           | int(11)      | NO   |     | 0                 |       |
-| name                | varchar(50)  | YES  |     | NULL              |       |
-| nofb                | varchar(20)  | NO   | PRI |                   |       |
-| fbcategory          | varchar(9)   | YES  |     | NULL              |       |
-| businesstype        | varchar(200) | YES  |     | NULL              |       |
-| otherbusinesstype   | varchar(200) | YES  |     | NULL              |       |
-| siup                | varchar(50)  | YES  |     | NULL              |       |
-| siupaddress         | varchar(200) | YES  |     | NULL              |       |
-| npwp                | varchar(50)  | YES  |     | NULL              |       |
-| npwpaddress         | varchar(200) | YES  |     | NULL              |       |
-| sppkp               | varchar(50)  | YES  |     | NULL              |       |
-| sppkpaddress        | varchar(200) | YES  |     | NULL              |       |
-| address             | varchar(200) | YES  |     | NULL              |       |
-| billaddress         | text         | YES  |     | NULL              |       |
-| city                | varchar(50)  | YES  |     | NULL              |       |
-| telp                | varchar(100) | YES  |     | NULL              |       |
-| fax                 | varchar(50)  | YES  |     | NULL              |       |
-| activationdate      | date         | YES  |     | NULL              |       |
-| period1             | date         | YES  |     | NULL              |       |
-| period2             | date         | YES  |     | NULL              |       |
-| servicecategories   | int(11)      | YES  |     | NULL              |       |
-| services            | text         | YES  |     | NULL              |       |
-| accounttype         | varchar(1)   | YES  |     | 1                 |       |
-| description         | text         | YES  |     | NULL              |       |
-| internaldescription | text         | YES  |     | NULL              |       |
-| completed           | varchar(1)   | YES  |     | NULL              |       |
-| status              | varchar(1)   | YES  |     | 0                 |       |
-| expirystatus        | varchar(1)   | YES  |     | 0                 |       |
-| createuser          | varchar(30)  | YES  |     | NULL              |       |
-| createdate          | timestamp    | NO   |     | CURRENT_TIMESTAMP |       |
-| tempstatus          | varchar(1)   | YES  |     | NULL              |       |
-*/
     getFb = () => {
         sql = 'select a.nofb,a.name,a.fbcategory,a.address,a.telp,  ';
         sql+= 'a.siup,a.npwp,a.sppkp  '
@@ -169,7 +136,7 @@ var getClient = obj => {
       sql = 'update fbs a left outer join clients b on b.validfb=a.nofb '
       sql+= 'set a.status = "1" '
       sql+= 'where b.name is not null '
-      sql = ' update fbs a left outer join clients b on b.validfb=a.nofb set a.status='1'  where validfb is not null'
+      sql = 'update fbs a left outer join clients b on b.validfb=a.nofb set a.status="1"  where validfb is not null'
       console.log('autoupdatefbs',sql)
       return sql
     }
@@ -179,8 +146,15 @@ var getClient = obj => {
       sql+= "set a.cause_id=b.cause_id , a.solution=b.solution where b.id= "+obj.id
       console.log('update children',sql);
       return sql
+    },
+    getPics = () => {
+      sql = 'select a.id client_id,a.name,b.name pic,b.role,b.phone,b.email from clients a '
+      sql+= 'left outer join fbpics b on b.client_id=a.id order by a.name ';
+      console.log('getPics',sql)
+      return sql
     }
     module.exports = {
+      getPics:getPics,
       autoUpdateValidFbs:autoUpdateValidFbs,
       autoUpdateInvalidFb:autoUpdateInvalidFb,
       autoUpdateValidFb:autoUpdateValidFb,

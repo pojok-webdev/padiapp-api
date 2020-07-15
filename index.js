@@ -220,4 +220,10 @@ app.post('/autoupdateticketchildren',(req,res)=>{
     res.send(result)
   })
 })
+app.get('/getpics',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.getPics(),result=>{
+    res.send(result)
+  })
+})
 app.listen(process.env.PORT || 2020);
