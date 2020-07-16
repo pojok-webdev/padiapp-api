@@ -160,8 +160,14 @@ var getClient = obj => {
       sql+= 'order by a.name '
       console.log('getPics',sql)
       return sql
+    },
+    getPicRoles = () => {
+      sql = 'select id,name from picroles '
+      console.log('PicRoles',sql)
+      return sql
     }
     module.exports = {
+      getPicRoles:getPicRoles,
       getPicByClientID:getPicByClientID,
       getPics:getPics,
       autoUpdateValidFbs:autoUpdateValidFbs,
