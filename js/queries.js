@@ -165,8 +165,15 @@ var getClient = obj => {
       sql = 'select id,name from picroles '
       console.log('PicRoles',sql)
       return sql
+    },
+    autocloseticketmorethan7daystroubleshoot = () => {
+      sql = 'update  tickets a left outer join  troubleshoot_requests b '
+      sql+= 'on b.ticket_id=a.id set a.status="1" '
+      sql+= 'where b.id is not null and datediff(now(),troubleshoot_date2)is not null and datediff(now(),troubleshoot_date2)>7'
+      return sql
     }
     module.exports = {
+      autocloseticketmorethan7daystroubleshoot:autocloseticketmorethan7daystroubleshoot,
       getPicRoles:getPicRoles,
       getPicByClientID:getPicByClientID,
       getPics:getPics,

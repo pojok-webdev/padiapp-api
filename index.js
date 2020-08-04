@@ -238,4 +238,10 @@ app.get('/getpicroles',(req,res)=>{
     res.send(result)
   })
 })
+app.get('/autocloseticketmorethan7daystroubleshoot',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.autocloseticketmorethan7daystroubleshoot(),result=>{
+    res.send(result)
+  })
+})
 app.listen(process.env.PORT || 2020);
