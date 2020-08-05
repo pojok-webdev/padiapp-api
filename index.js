@@ -214,9 +214,15 @@ app.get('/autoupdatevalidfbs',(req,res)=>{
     res.send(result)
   })
 })
-app.post('/autoupdateticketchildren',(req,res)=>{
+app.post('/autoupdateticketchildrenbyparentid',(req,res)=>{
   res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.autoUpdateTicketChildren(req.body),result=>{
+  con.getdata(query.autoUpdateTicketChildrenByParentid(req.body),result=>{
+    res.send(result)
+  })
+})
+app.get('/autoupdateticketchildren',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.autoUpdateTicketChildren(),result=>{
     res.send(result)
   })
 })

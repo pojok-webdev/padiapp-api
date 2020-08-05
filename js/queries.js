@@ -140,10 +140,17 @@ var getClient = obj => {
       console.log('autoupdatefbs',sql)
       return sql
     }
-    autoUpdateTicketChildren = obj => {
+    autoUpdateTicketChildrenByParentid = obj => {
       sql = "update tickets a "
       sql+= "right outer join tickets b on b.id=a.parentid "
       sql+= "set a.cause_id=b.cause_id , a.solution=b.solution where b.id= "+obj.id
+      console.log('update children',sql);
+      return sql
+    },
+    autoUpdateTicketChildren = () => {
+      sql = "update tickets a  right outer join tickets b on b.id=a.parentid "
+      sql+= "set a.cause_id=b.cause_id,a.solution=b.solution  "
+      sql+= "where b.requesttype<>'pelanggan' and a.id is not null and (a.solution<>b.solution or a.cause_id<>b.cause_id) "
       console.log('update children',sql);
       return sql
     },
@@ -182,6 +189,7 @@ var getClient = obj => {
       autoUpdateValidFb:autoUpdateValidFb,
       getFb:getFb,
       autoUpdateTicketChildren:autoUpdateTicketChildren,
+      autoUpdateTicketChildrenByParentid:autoUpdateTicketChildrenByParentid,
       autoUpdateExpiredFb:autoUpdateExpiredFb,
       getClient:getClient,
       getClients:getClients,
