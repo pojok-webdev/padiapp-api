@@ -250,4 +250,9 @@ app.get('/autocloseticketmorethan7daystroubleshoot',(req,res)=>{
     res.send(result)
   })
 })
+app.get('/createinstantsites',(req,res)=>{
+  con.getdata(query.createInstantSites(),result=>{
+    res.send(result)
+  })
+})
 app.listen(process.env.PORT || 2020);

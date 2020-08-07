@@ -178,8 +178,19 @@ var getClient = obj => {
       sql+= 'on b.ticket_id=a.id set a.status="1" '
       sql+= 'where b.id is not null and datediff(now(),troubleshoot_date2)is not null and datediff(now(),troubleshoot_date2)>7'
       return sql
+    },
+    createInstantSites = () => {
+      sql = 'insert into client_sites '
+      sql+= '(client_id,address) '
+      sql+= 'select a.id,a.address '
+      sql+= 'from clients a '
+      sql+= 'left outer join client_sites b on b.client_id=a.id '
+      sql+= 'where b.id is null and a.active="1"';
+      console.log('Create Instant Sites for Clients with no Sites',sql)
+      return sql
     }
     module.exports = {
+      createInstantSites:createInstantSites,
       autocloseticketmorethan7daystroubleshoot:autocloseticketmorethan7daystroubleshoot,
       getPicRoles:getPicRoles,
       getPicByClientID:getPicByClientID,
