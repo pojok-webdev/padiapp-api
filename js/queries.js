@@ -174,9 +174,17 @@ var getClient = obj => {
       return sql
     },
     autocloseticketmorethan7daystroubleshoot = () => {
+
+      /*
+      update  tickets a left outer join  troubleshoot_requests b on b.ticket_id=a.id set a.status="1"
+      where b.id is not null and datediff(now(),troubleshoot_date2)is not null
+      and datediff(now(),troubleshoot_date2)>=7  and kdticket='202008073' ;
+
+      */
       sql = 'update  tickets a left outer join  troubleshoot_requests b '
       sql+= 'on b.ticket_id=a.id set a.status="1" '
       sql+= 'where b.id is not null and datediff(now(),troubleshoot_date2)is not null and datediff(now(),troubleshoot_date2)>=7'
+      console.log('AutoClose',sql)
       return sql
     },
     createInstantSites = () => {
