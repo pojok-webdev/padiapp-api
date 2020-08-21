@@ -184,6 +184,13 @@ var getClient = obj => {
       sql = 'update  tickets a left outer join  troubleshoot_requests b '
       sql+= 'on b.ticket_id=a.id set a.status="1" '
       sql+= 'where b.id is not null and datediff(now(),troubleshoot_date2)is not null and datediff(now(),troubleshoot_date2)>=7'
+
+
+
+      sql = 'update  tickets a left outer join  troubleshoot_requests b '
+      sql+= 'on b.ticket_id=a.id set a.status="1" '
+      sql+= 'where b.id is not null and date(now())>=date(solvedschedule) and a.status="0" '
+
       console.log('AutoClose',sql)
       return sql
     },
