@@ -255,4 +255,11 @@ app.get('/createinstantsites',(req,res)=>{
     res.send(result)
   })
 })
+app.get('/getbackupdata',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdatatable(query.getBackupData(),result=>{
+      res.send(result)
+  })
+})
+
 app.listen(process.env.PORT || 2020);

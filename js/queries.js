@@ -15,6 +15,28 @@ var getClient = obj => {
         console.log('getClient SQL',sql)
         return sql;
     },
+    getBackupData = obj => {
+      sql = 'select a.nofb id_fb,'
+      sql+= 'a.businesstype jenis_usaha,'
+      sql+= 'a.address alamat,'
+      sql+= 'a.telp,a.fax,'
+      sql+= 'dpp biaya_bulanan,'
+      sql+= 'ppn ppn_bulanan,'
+      sql+= 'clientcategory id_kategori_fb,'
+      sql+= 'case clientcategory '
+      sql+= 'when "1" then "FFR" '
+      sql+= 'when "2" then "Platinum" '
+      sql+= 'when "3" then "Gold" '
+      sql+= 'when "4" then "Bronze" '
+      sql+= 'when "5" then "Silver"  '
+      sql+= 'end kategori_fb '
+      sql+= 'from fbs a '
+      sql+= 'left outer join (select nofb,dpp,ppn from fbfees where name="monthly") b on b.nofb=a.nofb '
+      sql+= 'left outer join clients c on c.id=a.client_id '
+      sql+= 'where a.status="1" and c.active="1"';
+      console.log('getBackupData',sql)
+      return sql
+    }
     getClientsByName = obj => {
         sql = 'select a.id,a.name,a.alias,a.address,a.phone,  ';
         sql+= 'case a.clientcategory '
@@ -205,6 +227,7 @@ var getClient = obj => {
       return sql
     }
     module.exports = {
+      getBackupData:getBackupData,
       createInstantSites:createInstantSites,
       autocloseticketmorethan7daystroubleshoot:autocloseticketmorethan7daystroubleshoot,
       getPicRoles:getPicRoles,
