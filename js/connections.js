@@ -45,7 +45,7 @@ getdatatable = function(obj,callback){
     console.log("OBJ",obj)
     doquery(obj,res=>{
         callback({"aaData":res.map(element => {
-            return [element.id_fb,element.jenis_usaha,element.address,element.telp,element.fax]
+            return [element.id_fb,element.kategori_fb,element.jenis_usaha,element.alamat,element.telp,element.fax]
         })
         })
     })
