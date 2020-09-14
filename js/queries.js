@@ -36,7 +36,30 @@ var getClient = obj => {
       sql+= 'where a.status="1" and c.active="1"';
       console.log('getBackupData',sql)
       return sql
-    }
+    },
+    getDataFB = obj => {
+      sql = 'select a.nofb id_fb,'
+      sql+= 'a.businesstype jenis_usaha,'
+      sql+= 'a.address alamat,'
+      sql+= 'a.telp,a.fax,'
+      sql+= 'dpp biaya_bulanan,'
+      sql+= 'ppn ppn_bulanan,'
+      sql+= 'clientcategory id_kategori_fb,'
+      sql+= 'case clientcategory '
+      sql+= 'when "1" then "FFR" '
+      sql+= 'when "2" then "Platinum" '
+      sql+= 'when "3" then "Gold" '
+      sql+= 'when "4" then "Bronze" '
+      sql+= 'when "5" then "Silver"  '
+      sql+= 'end kategori_fb '
+      sql+= 'from fbs a '
+      sql+= 'left outer join (select nofb,dpp,ppn from fbfees where name="monthly") b on b.nofb=a.nofb '
+      sql+= 'left outer join clients c on c.id=a.client_id '
+      sql+= 'where a.status="1" and c.active="1"';
+      console.log('getBackupData',sql)
+      return sql
+    },
+
     getClientsByName = obj => {
         sql = 'select a.id,a.name,a.alias,a.address,a.phone,  ';
         sql+= 'case a.clientcategory '
@@ -196,23 +219,9 @@ var getClient = obj => {
       return sql
     },
     autocloseticketmorethan7daystroubleshoot = () => {
-
-      /*
-      update  tickets a left outer join  troubleshoot_requests b on b.ticket_id=a.id set a.status="1"
-      where b.id is not null and datediff(now(),troubleshoot_date2)is not null
-      and datediff(now(),troubleshoot_date2)>=7  and kdticket='202008073' ;
-
-      */
       sql = 'update  tickets a left outer join  troubleshoot_requests b '
-      sql+= 'on b.ticket_id=a.id set a.status="1" '
-      sql+= 'where b.id is not null and datediff(now(),troubleshoot_date2)is not null and datediff(now(),troubleshoot_date2)>=7'
-
-
-
-      sql = 'update  tickets a left outer join  troubleshoot_requests b '
-      sql+= 'on b.ticket_id=a.id set a.status="1" '
+      sql+= 'on b.ticket_id=a.id set a.status="1",a.ticketend=b.solvedschedule '
       sql+= 'where b.id is not null and date(now())>=date(solvedschedule) and a.status="0" '
-
       console.log('AutoClose',sql)
       return sql
     },
