@@ -196,6 +196,14 @@ var getClient = obj => {
       sql = "update tickets a  right outer join tickets b on b.id=a.parentid "
       sql+= "set a.cause_id=b.cause_id,a.solution=b.solution  "
       sql+= "where b.requesttype<>'pelanggan' and a.id is not null and (a.solution<>b.solution or a.cause_id<>b.cause_id) "
+      sql = 'update tickets a '
+      sql+= ' right outer join tickets b on b.id=a.parentid '
+      sql+= 'set a.cause_id=b.cause_id,a.solution=b.solution '
+      sql+= ' where b.requesttype<>"pelanggan"  and a.id is not null '
+      sql+= ' and (a.solution is null and b.solution is not null) '
+      sql+= ' or (a.cause_id is null and b.cause_id is not null) '
+      sql+= ' and (a.solution<>b.solution) '
+      sql+= ' and (a.cause_id<>b.cause_id) '
       console.log('update children',sql);
       return sql
     },
