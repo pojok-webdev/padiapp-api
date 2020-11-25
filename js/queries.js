@@ -294,7 +294,7 @@ var getClient = obj => {
       return sql
     }
     getInstallImages = obj => {
-      sql = 'select id,install_site_id from install_images '
+      sql = 'select id,install_site_id,img,roworder,description,username,create_date,title from install_images '
       sql+= 'where install_site_id='+obj.install_site_id
       console.log('Install Images',sql)
       return sql
