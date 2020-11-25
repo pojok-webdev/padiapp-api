@@ -289,7 +289,7 @@ var getClient = obj => {
       sql = 'select c.id,c.name from install_requests a '
       sql+= 'left outer join client_sites b on b.id=a.client_site_id '
       sql+= 'left outer join clients c on c.id=b.client_id  '
-      sql+= 'where a.status>"'+obj.status+'"'
+      sql+= 'where a.status="'+obj.status+'"'
       console.log('Install Requests',sql)
       return sql
     }
