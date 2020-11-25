@@ -246,7 +246,7 @@ var getClient = obj => {
     copyFU = obj => {
       sql = 'insert into ticket_followups '
       sql+= '('
-      sql+= 'ticket_id,'      
+      sql+= 'ticket_id,'
       sql+= 'followUpDate,'
       sql+= 'picname,'
       sql+= 'position,'
@@ -293,7 +293,14 @@ var getClient = obj => {
       console.log('Install Requests',sql)
       return sql
     }
+    getInstallImages = obj => {
+      sql = 'select id,install_site_id from install_images '
+      sql+= 'where install_site_id='+obj.install_site_id
+      console.log('Install Images',sql)
+      return sql
+    }
     module.exports = {
+      getInstallImages:getInstallImages,
       getInstallRequests:getInstallRequests,
       copyFu:copyFU,
       getBackupData:getBackupData,
