@@ -242,8 +242,60 @@ var getClient = obj => {
       sql+= 'where b.id is null and a.active="1"';
       console.log('Create Instant Sites for Clients with no Sites',sql)
       return sql
+    },
+    copyFU = obj => {
+      sql = 'insert into ticket_followups '
+      sql+= '('
+      sql+= 'ticket_id,'      
+      sql+= 'followUpDate,'
+      sql+= 'picname,'
+      sql+= 'position,'
+      sql+= 'picphone,'
+      sql+= 'cause_id,'
+      sql+= 'result,'
+      sql+= 'confirmationresult,'
+      sql+= 'base64confirmationresult,'
+      sql+= 'description,'
+      sql+= 'base64description,'
+      sql+= 'conclusion,'
+      sql+= 'base64conclusion,'
+      sql+= 'username'
+      sql+= ') '
+      sql+= 'select a.id, '
+
+      sql+= 'c.followUpDate,'
+      sql+= 'c.picname,'
+      sql+= 'c.position,'
+      sql+= 'c.picphone,'
+      sql+= 'c.cause_id,'
+      sql+= 'c.result,'
+      sql+= 'c.confirmationresult,'
+      sql+= 'c.base64confirmationresult,'
+      sql+= 'c.description,'
+      sql+= 'c.base64description,'
+      sql+= 'c.conclusion,'
+      sql+= 'c.base64conclusion,'
+      sql+= 'c.username '
+
+
+      sql+= 'from tickets a '
+      sql+= 'left outer join tickets b on b.id=a.parentid '
+      sql+= 'left outer join ticket_followups c on c.ticket_id=b.id '
+      sql+= 'where a.parentid = '+ obj.parentid + ''
+      console.log('CopyFU SQL',sql)
+      return sql
+    }
+    getInstallRequests = obj =>{
+      sql = 'select c.id,c.name from install_requests a '
+      sql+= 'left outer join client_sites b on b.id=a.client_site_id '
+      sql+= 'left outer join clients c on c.id=b.client_id  '
+      sql+= 'where a.status>"'+obj.status+'"'
+      console.log('Install Requests',sql)
+      return sql
     }
     module.exports = {
+      getInstallRequests:getInstallRequests,
+      copyFu:copyFU,
       getBackupData:getBackupData,
       createInstantSites:createInstantSites,
       autocloseticketmorethan7daystroubleshoot:autocloseticketmorethan7daystroubleshoot,

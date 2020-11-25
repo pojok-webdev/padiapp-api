@@ -267,5 +267,17 @@ app.get('/getjsonbackupdata',(req,res)=>{
       res.send(result)
   })
 })
+app.get('/copyfu/:parentid',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.copyFu(req.params),result=>{
+      res.send(result)
+  })
+})
+app.get('/getinstallrequests/:status',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.getInstallRequests(req.params),result=>{
+      res.send(result)
+  })
+})
 
 app.listen(process.env.PORT || 2020);
