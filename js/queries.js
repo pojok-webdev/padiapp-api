@@ -286,9 +286,10 @@ var getClient = obj => {
       return sql
     }
     getInstallRequests = obj =>{
-      sql = 'select c.id,c.name from install_requests a '
-      sql+= 'left outer join client_sites b on b.id=a.client_site_id '
-      sql+= 'left outer join clients c on c.id=b.client_id  '
+      sql = 'select a.id install_site_id,b.id install_request_id,c.id client_site_id,d.id client_id,d.name,a.address from install_sites a '
+      sql+= 'left outer join install_requests b on b.id=a.install_request_id '
+      sql+= 'left outer join client_sites c on c.id=a.client_site_id '
+      sql+= 'left outer join clients d on d.id=c.client_id  '
       sql+= 'where a.status="'+obj.status+'"'
       console.log('Install Requests',sql)
       return sql
