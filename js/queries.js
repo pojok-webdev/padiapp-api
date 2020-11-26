@@ -284,7 +284,7 @@ var getClient = obj => {
       sql+= 'where a.parentid = '+ obj.parentid + ''
       console.log('CopyFU SQL',sql)
       return sql
-    }
+    },
     getInstallRequests = obj =>{
       sql = 'select a.id install_site_id,b.id install_request_id,c.id client_site_id,d.id client_id,d.name,a.address from install_sites a '
       sql+= 'left outer join install_requests b on b.id=a.install_request_id '
@@ -293,14 +293,23 @@ var getClient = obj => {
       sql+= 'where a.status="'+obj.status+'"'
       console.log('Install Requests',sql)
       return sql
-    }
+    },
     getInstallImages = obj => {
       sql = 'select id,install_site_id,img,roworder,description,username,create_date,title from install_images '
       sql+= 'where install_site_id='+obj.install_site_id
       console.log('Install Images',sql)
       return sql
+    },
+    saveinstallimage = obj => {
+      sql = 'insert into install_images '
+      sql+= '(install_site_id,img) '
+      sql+= 'values '
+      sql+= '('+obj.install_site_id+',"'+obj.img+'")'
+      console.log('Save Install Image',sql)
+      return sql
     }
     module.exports = {
+      saveinstallimage:this.saveinstallimage,
       getInstallImages:getInstallImages,
       getInstallRequests:getInstallRequests,
       copyFu:copyFU,

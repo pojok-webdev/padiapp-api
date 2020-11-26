@@ -285,5 +285,11 @@ app.get('/getinstallimages/:install_site_id',(req,res)=>{
       res.send(result)
   })
 })
+app.post('/saveinstallimage',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.saveinstallimage(req.body),result=>{
+      res.send(result)
+  })
+})
 
 app.listen(process.env.PORT || 2020);
