@@ -315,7 +315,7 @@ var getClient = obj => {
       return sql
     }
     module.exports = {
-      saveinstallimage:this.saveinstallimage,
+      saveinstallimage:saveinstallimage,
       getInstallImages:getInstallImages,
       getInstallRequests:getInstallRequests,
       copyFu:copyFU,
