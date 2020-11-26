@@ -297,7 +297,8 @@ app.post('/saveinstallimage',(req,res)=>{
   res.header("Access-Control-Allow-Origin","*");
   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-
+  console.log('REQ',req)
+  console.log('RES',res)
   con.getdata(query.saveinstallimage(req.body),result=>{
       res.send(result)
   })
