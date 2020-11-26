@@ -189,7 +189,9 @@ var getClient = obj => {
       sql = "update tickets a "
       sql+= "right outer join tickets b on b.id=a.parentid "
       sql+= "set a.cause_id=b.cause_id , a.solution=b.solution where b.id= "+obj.id
-      console.log('update children',sql);
+      if(false){
+        console.log('update children',sql);
+      }
       return sql
     },
     autoUpdateTicketChildren = () => {
@@ -204,7 +206,9 @@ var getClient = obj => {
       sql+= ' or (a.cause_id is null and b.cause_id is not null) '
       sql+= ' and (a.solution<>b.solution) '
       sql+= ' and (a.cause_id<>b.cause_id) '
-      console.log('update children',sql);
+      if(false){
+        console.log('update children',sql);
+      }
       return sql
     },
     getPics = () => {
@@ -230,7 +234,9 @@ var getClient = obj => {
       sql = 'update  tickets a left outer join  troubleshoot_requests b '
       sql+= 'on b.ticket_id=a.id set a.status="1",a.ticketend=b.solvedschedule '
       sql+= 'where b.id is not null and date(now())>=date(solvedschedule) and a.status="0" '
-      console.log('AutoClose',sql)
+      if(false){
+        console.log('AutoClose',sql)
+      }
       return sql
     },
     createInstantSites = () => {
