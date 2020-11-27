@@ -315,5 +315,17 @@ app.get('/getticketbycode/:kdticket',(req,res)=>{
       res.send(result)
   })
 })
+app.get('/removeticket/:id',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.removeticket(req.params),result=>{
+      res.send(result)
+  })
+})
+app.get('/backupticket/:id',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.backupticket(req.params),result=>{
+      res.send(result)
+  })
+})
 
 app.listen(process.env.PORT || 2020);

@@ -325,8 +325,22 @@ var getClient = obj => {
       sql+= 'where kdticket='+obj.kdticket+' '
       console.log('getticketbycode',sql)
       return sql
+    },
+    removeticket = obj => {
+      sql = 'delete from tickets '
+      sql+= 'where id='+obj.id
+      console.log('delete ticket',sql)
+      return sql
+    }
+    backupticket = obj => {
+      sql = 'insert into deletedtickets '
+      sql+= 'select * from tickets where id='+obj.id
+      console.log('backup ticket',sql)
+      return sql
     }
     module.exports = {
+      backupticket:backupticket,
+      removeticket:removeticket,
       getticketbycode:getticketbycode,
       removeinstallimage:removeinstallimage,
       saveinstallimage:saveinstallimage,
