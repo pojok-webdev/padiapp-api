@@ -313,8 +313,22 @@ var getClient = obj => {
       sql+= '('+obj.install_site_id+',"'+obj.img+'")'
       console.log('Save Install Image',sql)
       return sql
+    },
+    removeinstallimage = obj => {
+      sql = 'delete from install_images '
+      sql+= 'where id = ' + obj.id
+      console.log('Remove install image',sql)
+      return sql
+    },
+    getticketbycode = obj => {
+      sql = 'select id,status,kdticket,clientname from tickets '
+      sql+= 'where kdticket='+obj.kdticket+' '
+      console.log('getticketbycode',sql)
+      return sql
     }
     module.exports = {
+      getticketbycode:getticketbycode,
+      removeinstallimage:removeinstallimage,
       saveinstallimage:saveinstallimage,
       getInstallImages:getInstallImages,
       getInstallRequests:getInstallRequests,

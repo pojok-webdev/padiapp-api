@@ -303,5 +303,17 @@ app.post('/saveinstallimage',(req,res)=>{
       res.send(result)
   })
 })
+app.get('/removeinstallimage/:id',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.removeinstallimage(req.params),result=>{
+      res.send(result)
+  })
+})
+app.get('/getticketbycode/:kdticket',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.getticketbycode(req.params),result=>{
+      res.send(result)
+  })
+})
 
 app.listen(process.env.PORT || 2020);
