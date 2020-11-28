@@ -315,6 +315,12 @@ app.get('/getticketbycode/:kdticket',(req,res)=>{
       res.send(result)
   })
 })
+app.get('/getticketbyname/:clientname',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.getticketbyname(req.params),result=>{
+      res.send(result)
+  })
+})
 app.get('/removeticket/:id',(req,res)=>{
   res.header("Access-Control-Allow-Origin","*")
   con.getdata(query.removeticket(req.params),result=>{
@@ -324,6 +330,24 @@ app.get('/removeticket/:id',(req,res)=>{
 app.get('/backupticket/:id',(req,res)=>{
   res.header("Access-Control-Allow-Origin","*")
   con.getdata(query.backupticket(req.params),result=>{
+      res.send(result)
+  })
+})
+app.get('/tickettrash/:segment/:offset',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.tickettrash(req.params),result=>{
+      res.send(result)
+  })
+})
+app.get('/restoreticket/:id',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.restoreticket(req.params),result=>{
+      res.send(result)
+  })
+})
+app.get('/removedeletedticket/:id',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.removedeletedticket(req.params),result=>{
       res.send(result)
   })
 })
