@@ -364,7 +364,7 @@ var getClient = obj => {
       return sql
     }
     ticketsamount = obj => {
-      sql = 'select count(id) frm tickets '
+      sql = 'select count(id) cnt from tickets '
       sql+= 'where status='+obj.status
       console.log('tickets amount'+obj.status,sql)
       return sql
