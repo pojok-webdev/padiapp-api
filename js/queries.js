@@ -363,7 +363,14 @@ var getClient = obj => {
       console.log('remove deleted ticket',sql)
       return sql
     }
+    ticketsamount = obj => {
+      sql = 'select count(id) frm tickets '
+      sql+= 'where status='+obj.status
+      console.log('tickets amount'+obj.status,sql)
+      return sql
+    }
     module.exports = {
+      ticketsamount:ticketsamount,
       getticketbyname:getticketbyname,
       removedeletedticket:removedeletedticket,
       restoreticket:restoreticket,
