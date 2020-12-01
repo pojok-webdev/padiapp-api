@@ -362,14 +362,23 @@ var getClient = obj => {
       sql+= 'where id='+obj.id
       console.log('remove deleted ticket',sql)
       return sql
-    }
+    },
     ticketsamount = obj => {
       sql = 'select count(id) cnt from tickets '
       sql+= 'where status='+obj.status
       console.log('tickets amount'+obj.status,sql)
       return sql
+    },
+    getInstallationByClientId = obj => {
+      sql = 'select a.name,c.status from clients a '
+      sql+= 'left outer join client_sites b on b.client_id=a.id '
+      sql+= 'left outer join install_requests c on c.client_site_id=b.id '
+      sql+= 'where a.id = ' + obj.id + ' '
+      console.log('get installation by client id',sql)
+      return sql
     }
     module.exports = {
+      getInstallationByClientId:getInstallationByClientId,
       ticketsamount:ticketsamount,
       getticketbyname:getticketbyname,
       removedeletedticket:removedeletedticket,

@@ -357,5 +357,11 @@ app.get('/ticketsamount/:status',(req,res)=>{
     res.send(result)
   })
 })
+app.get('/getinstallationbyclientid/:id',(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*")
+  con.getdata(query.getInstallationByClientId(req.params),result=>{
+    res.send(result)
+  })
+})
 
 app.listen(process.env.PORT || 2020);
