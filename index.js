@@ -181,6 +181,16 @@ app.get('/getallclientsites',(req,res)=>{
       res.send(result)
     })
 })
+app.get('/getclientservices',(req,res)=>{
+  con.getdata(query.getClientServices(),result => {
+    res.send(result)
+  })
+})
+app.post('/getclientservicesbyclient',(req,res)=>{
+  con.getdata(query.getClientServicesByClient(req.body),result => {
+    res.send(result)
+  })
+})
 app.get('/getfb/:id',(req,res)=>{
     res.header("Access-Control-Allow-Origin","*");
     con.getdata(query.getFb(req.params),result => {
@@ -280,88 +290,6 @@ app.get('/copyfu/:parentid',(req,res)=>{
       res.send(result)
   })
 })
-app.get('/getinstallrequests/:status',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.getInstallRequests(req.params),result=>{
-      res.send(result)
-  })
-})
-app.get('/getinstallimages/:install_site_id',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.getInstallImages(req.params),result=>{
-      res.send(result)
-  })
-})
-app.post('/saveinstallimage',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  res.header("Access-Control-Allow-Origin","*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-  console.log('REQ',req)
-  console.log('RES',res)
-  con.getdata(query.saveinstallimage(req.body),result=>{
-      res.send(result)
-  })
-})
-app.get('/removeinstallimage/:id',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.removeinstallimage(req.params),result=>{
-      res.send(result)
-  })
-})
-app.get('/getticketbycode/:kdticket',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.getticketbycode(req.params),result=>{
-      res.send(result)
-  })
-})
-app.get('/getticketbyname/:clientname',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.getticketbyname(req.params),result=>{
-      res.send(result)
-  })
-})
-app.get('/removeticket/:id',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.removeticket(req.params),result=>{
-      res.send(result)
-  })
-})
-app.get('/backupticket/:id',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.backupticket(req.params),result=>{
-      res.send(result)
-  })
-})
-app.get('/tickettrash/:segment/:offset',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.tickettrash(req.params),result=>{
-      res.send(result)
-  })
-})
-app.get('/restoreticket/:id',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.restoreticket(req.params),result=>{
-      res.send(result)
-  })
-})
-app.get('/removedeletedticket/:id',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.removedeletedticket(req.params),result=>{
-      res.send(result)
-  })
-})
-app.get('/ticketsamount/:status',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.ticketsamount(req.params),result=>{
-    res.send(result)
-  })
-})
-app.get('/getinstallationbyclientid/:id',(req,res)=>{
-  res.header("Access-Control-Allow-Origin","*")
-  con.getdata(query.getInstallationByClientId(req.params),result=>{
-    res.send(result)
-  })
-})
+
 
 app.listen(process.env.PORT || 2020);

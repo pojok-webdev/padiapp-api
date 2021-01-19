@@ -138,6 +138,20 @@ var getClient = obj => {
         console.log('getClients SQL',sql)
         return sql;
     },
+    getClientServices = () => {
+      sql = 'select b.name,a.category,humanreadable2,activationdate from fbservices a  '
+      sql+= 'left outer join fbs b on b.nofb=a.fb_id '
+      console.log('ClientServices',sql)
+      return sql
+    },
+    getClientServicesByClient = obj => {
+      sql = 'select b.name,a.category,humanreadable2,activationdate from fbservices a  '
+      sql+= 'left outer join fbs b on b.nofb=a.fb_id '
+      sql+= 'left outer join clients c on c.id=b.client_id '
+      sql+= 'where c.name like "%'+obj.name+'%" '
+      console.log('ClientServices',sql)
+      return sql
+    },
     createLog = obj => {
         sql = 'insert into activitylog '
         sql+= '(email ,module ,description) '
@@ -290,107 +304,8 @@ var getClient = obj => {
       sql+= 'where a.parentid = '+ obj.parentid + ''
       console.log('CopyFU SQL',sql)
       return sql
-    },
-    getInstallRequests = obj =>{
-      sql = 'select a.id install_site_id,b.id install_request_id,c.id client_site_id,d.id client_id,d.name,a.address from install_sites a '
-      sql+= 'left outer join install_requests b on b.id=a.install_request_id '
-      sql+= 'left outer join client_sites c on c.id=a.client_site_id '
-      sql+= 'left outer join clients d on d.id=c.client_id  '
-      sql+= 'where a.status="'+obj.status+'"'
-      console.log('Install Requests',sql)
-      return sql
-    },
-    getInstallImages = obj => {
-      sql = 'select id,install_site_id,img,roworder,description,username,create_date,title from install_images '
-      sql+= 'where install_site_id='+obj.install_site_id
-      console.log('Install Images',sql)
-      return sql
-    },
-    saveinstallimage = obj => {
-      sql = 'insert into install_images '
-      sql+= '(install_site_id,img) '
-      sql+= 'values '
-      sql+= '('+obj.install_site_id+',"'+obj.img+'")'
-      console.log('Save Install Image',sql)
-      return sql
-    },
-    removeinstallimage = obj => {
-      sql = 'delete from install_images '
-      sql+= 'where id = ' + obj.id
-      console.log('Remove install image',sql)
-      return sql
-    },
-    getticketbycode = obj => {
-      sql = 'select id,status,kdticket,clientname from tickets '
-      sql+= 'where kdticket='+obj.kdticket+' '
-      console.log('getticketbycode',sql)
-      return sql
-    },
-    getticketbyname = obj => {
-      sql = 'select id,status,kdticket,clientname from tickets '
-      sql+= 'where clientname like "%'+obj.clientname+'%" '
-      console.log('getticketbyname',sql)
-      return sql
-    },
-    removeticket = obj => {
-      sql = 'delete from tickets '
-      sql+= 'where id='+obj.id
-      console.log('delete ticket',sql)
-      return sql
-    },
-    backupticket = obj => {
-      sql = 'insert into deletedtickets '
-      sql+= 'select * from tickets where id='+obj.id
-      console.log('backup ticket',sql)
-      return sql
-    },
-    tickettrash = obj => {
-      sql = 'select id,kdticket,clientname from deletedtickets '
-      sql+= 'limit ' + obj.segment + ',' + obj.offset
-      console.log('show trash',sql)
-      return sql
-    },
-    restoreticket = obj => {
-      sql = 'insert into tickets '
-      sql+= 'select * from deletedtickets '
-      sql+= 'where id='+obj.id
-      console.log('restore ticket',sql)
-      return sql
-    },
-    removedeletedticket = obj => {
-      sql = 'delete from deletedtickets '
-      sql+= 'where id='+obj.id
-      console.log('remove deleted ticket',sql)
-      return sql
-    },
-    ticketsamount = obj => {
-      sql = 'select count(id) cnt from tickets '
-      sql+= 'where status='+obj.status
-      console.log('tickets amount'+obj.status,sql)
-      return sql
-    },
-    getInstallationByClientId = obj => {
-      sql = 'select a.name,c.status from clients a '
-      sql+= 'left outer join client_sites b on b.client_id=a.id '
-      sql+= 'left outer join install_requests c on c.client_site_id=b.id '
-      sql+= 'where a.id = ' + obj.id + ' '
-      console.log('get installation by client id',sql)
-      return sql
     }
     module.exports = {
-      getInstallationByClientId:getInstallationByClientId,
-      ticketsamount:ticketsamount,
-      getticketbyname:getticketbyname,
-      removedeletedticket:removedeletedticket,
-      restoreticket:restoreticket,
-      tickettrash:tickettrash,
-      backupticket:backupticket,
-      removeticket:removeticket,
-      getticketbycode:getticketbycode,
-      removeinstallimage:removeinstallimage,
-      saveinstallimage:saveinstallimage,
-      getInstallImages:getInstallImages,
-      getInstallRequests:getInstallRequests,
       copyFu:copyFU,
       getBackupData:getBackupData,
       createInstantSites:createInstantSites,
@@ -410,6 +325,8 @@ var getClient = obj => {
       getClientsByName:getClientsByName,
       getClientSitesByClientId:getClientSitesByClientId,
       getAllClientSites:getAllClientSites,
+      getClientServices:getClientServices,
+      getClientServicesByClient:getClientServicesByClient,
       getLogs:getLogs,
       createLog:createLog,
     }
