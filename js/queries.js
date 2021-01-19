@@ -140,17 +140,22 @@ var getClient = obj => {
     },
     getClientServices = () => {
       sql = 'select c.name,a.category service,humanreadable2 detail,activationdate,'
+      sql+= 'c.id client_id,b.nofb,d.dpp,'
       sql+= 'case b.expirystatus when "0" then "Aktif" when "1" then b.period2 end expirystatus  from fbservices a  '
       sql+= 'left outer join fbs b on b.nofb=a.fb_id '
       sql+= 'left outer join clients c on c.id=b.client_id '
+      sql+= 'left outer join (select client_id,dpp,ppn from fbfees where name="monthly") d on d.client_id=c.id '
       console.log('ClientServices',sql)
       return sql
     },
     getClientServicesByClient = obj => {
       sql = 'select c.name,a.category service,humanreadable2 detail,activationdate,'
-      sql+= 'case b.expirystatus when "0" then "Aktif" when "1" then b.period2 end expirystatus from fbservices a  '
+      sql+= 'c.id client_id,b.nofb,d.dpp,'
+      sql+= 'case b.expirystatus when "0" then "Aktif" when "1" then b.period2 end expirystatus '
+      sql+= 'from fbservices a  '
       sql+= 'left outer join fbs b on b.nofb=a.fb_id '
       sql+= 'left outer join clients c on c.id=b.client_id '
+      sql+= 'left outer join (select client_id,dpp,ppn from fbfees where name="monthly") d on d.client_id=c.id '
       sql+= 'where c.name like "%'+obj.name+'%" '
       console.log('ClientServices',sql)
       return sql
