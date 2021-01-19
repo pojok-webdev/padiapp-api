@@ -140,7 +140,7 @@ var getClient = obj => {
     },
     getClientServices = () => {
       sql = 'select c.name,a.category service,humanreadable2 detail,activationdate,'
-      sql+= 'c.id client_id,b.nofb,d.dpp,'
+      sql+= 'c.id client_id,b.nofb,d.dpp,d.ppn,'
       sql+= 'case b.expirystatus when "0" then "Aktif" when "1" then b.period2 end expirystatus  from fbservices a  '
       sql+= 'left outer join fbs b on b.nofb=a.fb_id '
       sql+= 'left outer join clients c on c.id=b.client_id '
@@ -150,7 +150,7 @@ var getClient = obj => {
     },
     getClientServicesByClient = obj => {
       sql = 'select c.name,a.category service,humanreadable2 detail,activationdate,'
-      sql+= 'c.id client_id,b.nofb,d.dpp,'
+      sql+= 'c.id client_id,b.nofb,d.dpp,d.ppn,'
       sql+= 'case b.expirystatus when "0" then "Aktif" when "1" then b.period2 end expirystatus '
       sql+= 'from fbservices a  '
       sql+= 'left outer join fbs b on b.nofb=a.fb_id '
