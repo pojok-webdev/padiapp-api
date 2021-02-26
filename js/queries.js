@@ -196,7 +196,7 @@ var getClient = obj => {
       sql += " when '1' then 'valid' ";
       sql += " when '2' then 'canceled' ";
       sql += " when '3' then 'expired' end fbstatus,";
-      sql += "e.category service,humanreadable2 detail,";
+      sql += "group_concat(e.category,humanreadable2) srv,";
       sql += "b.completed ";
       sql += "from clients a ";
       sql += "right outer join fbs b on b.client_id=a.id ";
@@ -204,6 +204,9 @@ var getClient = obj => {
       sql += "left outer join branches d on d.id=a.branch_id ";
       sql += "left outer join fbservices e on e.fb_id=b.nofb ";
       sql+= 'where b.name like "%'+obj.name+'%" '
+      sql+= 'group by a.name,nofb,a.id,b.businesstype,b.servicecategories,b.siup,b.npwp,'
+      sql+= 'b.address,b.billaddress,b.description,b.description,b.city,d.name,b.telp,'
+      sql+= 'b.fax,b.activationdate,b.period1,b.period2,b.services'
       return sql
     }
     createLog = obj => {
