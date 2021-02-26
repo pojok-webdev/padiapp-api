@@ -191,6 +191,11 @@ app.post('/getclientservicesbyclient',(req,res)=>{
     res.send(result)
   })
 })
+app.post('/getclientsitesbyclientname',(req,res)=>{
+  con.getdata(query.getClientSitesByClientName(req.body),result => {
+    res.send(result)
+  })
+})
 app.get('/getfb/:id',(req,res)=>{
     res.header("Access-Control-Allow-Origin","*");
     con.getdata(query.getFb(req.params),result => {

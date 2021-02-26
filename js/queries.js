@@ -160,6 +160,52 @@ var getClient = obj => {
       console.log('ClientServices',sql)
       return sql
     },
+    getClientSitesByClientName = obj => {
+      sql = "select a.name,";
+      sql += "case when nofb is null then ";
+      sql += " case branch_id ";
+      sql += " when '1' then concat('SBY',date_format(now(),'%Y%m%d'),lpad(a.id,4,'0')) ";
+      sql += " when '2' then concat('JKT',date_format(now(),'%Y%m%d'),lpad(a.id,4,'0')) ";
+      sql += " when 3 then concat('MLG',date_format(now(),'%Y%m%d'),lpad(a.id,4,'0')) ";
+      sql += " when '4' then concat('BLI',date_format(now(),'%Y%m%d'),lpad(a.id,4,'0')) end ";
+      sql += " else nofb ";
+      sql += " end ccc ,";
+      sql += "";
+      sql += "b.businesstype,";
+      sql += "c.username,";
+      sql += "b.nofb,b.name fbname,";
+      sql += "case b.businesstype when 'Pilihlah' then '' else b.businesstype end businesstype,";
+      sql += "b.servicecategories,";
+      sql += "b.siup,";
+      sql += "b.npwp,";
+      sql += "b.address,";
+      sql += "b.billaddress,";
+      sql += "b.description,";
+      sql += "case when b.city = '' then '-' when b.city is null then '-' else b.city end city,";
+      sql += "case when b.city = '' then d.name when b.city is null then d.name else concat(d.name,'/',b.city) end branchcity,";
+      sql += "b.telp,";
+      sql += "b.fax,";
+      sql += "b.activationdate,";
+      sql += "b.period1,";
+      sql += "b.period2,";
+      sql += "date_format(b.period2,'%M') lastmonth,";
+      sql += "b.services,";
+      sql += "d.name branch, ";
+      sql += "case b.status ";
+      sql += " when '0' then 'ignore' ";
+      sql += " when '1' then 'valid' ";
+      sql += " when '2' then 'canceled' ";
+      sql += " when '3' then 'expired' end fbstatus,";
+      sql += "e.category service,humanreadable2 detail,";
+      sql += "b.completed ";
+      sql += "from clients a ";
+      sql += "right outer join fbs b on b.client_id=a.id ";
+      sql += "left outer join users c on c.id=a.sale_id ";
+      sql += "left outer join branches d on d.id=a.branch_id ";
+      sql += "left outer join fbservices e on e.fb_id=b.nofb ";
+      sql+= 'where b.name like "%'+obj.name+'%" '
+      return sql
+    }
     createLog = obj => {
         sql = 'insert into activitylog '
         sql+= '(email ,module ,description) '
@@ -335,6 +381,7 @@ var getClient = obj => {
       getAllClientSites:getAllClientSites,
       getClientServices:getClientServices,
       getClientServicesByClient:getClientServicesByClient,
+      getClientSitesByClientName:getClientSitesByClientName,
       getLogs:getLogs,
       createLog:createLog,
     }
